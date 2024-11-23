@@ -15,13 +15,13 @@ The Playwright framework has been selected to provide test coverage for this app
 1. Clone the repository:
 
    ```sh
-   git clone git@github.com:sirdir/abn-amro-test-assignment.git
+   git clone git@github.com:sirdir/ThreatFabric-test-assignment.git
    ```
 
 2. Navigate to the project directory:
 
    ```sh
-   cd abn-amro-test-assignment
+   cd ThreatFabric-test-assignment
    ```
 
 3. Install project dependencies:
@@ -35,7 +35,6 @@ The Playwright framework has been selected to provide test coverage for this app
    ```sh
    npx playwright install --with-deps chromium
    ```
-
 
 ## TODO mayber smth else will be added during development
 
@@ -51,6 +50,8 @@ TODO
 
 TODO
 
-## Static fixes Analysis
+## Static Analysis and Code Style
 
-TODO
+To maintain a consistent code style and prevent potential issues, Prettier and ESLint have been utilized as tools. Before each commit, a `pre-commit` hook is triggered to run Prettier and ESLint.
+
+Some changes have been made to the application source code due to potential issues identified by ESLint.
