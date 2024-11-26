@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -18,7 +22,8 @@ export default defineConfig({
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'https://openlibrary.org/',
+    extraHTTPHeaders: { 'User-Agent': 'Playwright/1.49.0 (phddir@gmail.com)' },
     screenshot: { mode: 'only-on-failure', fullPage: true },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: { mode: 'retain-on-failure', sources: true },
@@ -28,7 +33,19 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1920, height: 1080 } },
+    },
+    {
+      name: 'api',
+      dependencies: ['api-setup'],
+      use: {
+        trace: 'on-all-retries',
+        extraHTTPHeaders: { 'User-Agent': 'Playwright/1.49.0 (phddir@gmail.com)', 'Content-Type': 'application/json' },
+      },
+    },
+    {
+      name: 'api-setup',
+      testMatch: /global\.api\.setup\.ts/,
     },
   ],
 });
