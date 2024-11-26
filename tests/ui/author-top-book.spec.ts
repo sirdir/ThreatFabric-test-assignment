@@ -14,9 +14,6 @@ writers.forEach(({ author, title, topBook }) => {
     searchResultsPage,
     authorPage,
   }) => {
-    // `tolkien` test is quite slow, so we need to increase the timeout
-    test.setTimeout(60_000);
-
     await test.step('user make advanced search', async () => {
       await advancedSearchPage.visit();
       await advancedSearchPage.search({ title, author });

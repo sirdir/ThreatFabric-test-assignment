@@ -1,9 +1,8 @@
 import { test as setup } from '@playwright/test';
 
 setup('Getting and setting auth Cookie', async ({ request }) => {
-  if (process.env.USER_EMAIL && process.env.PASSWORD) {
+  if (process.env.USER_EMAIL && process.env.USER_PASSWORD) {
     const loginResponse = await request.post(`/account/login`, {
-      headers: { 'Content-Type': `application/json` },
       data: { access: process.env.ACCESS_KEY, secret: process.env.SECRET_KEY },
       failOnStatusCode: true,
     });
@@ -17,7 +16,7 @@ setup('Getting and setting auth Cookie', async ({ request }) => {
     }
   } else {
     throw new Error(
-      'USER_EMAIL or PASSWORD is missing from .env file. ' +
+      'USER_EMAIL or USER_PASSWORD is missing from .env file or haven`t been set in GitHub Actions secrets' +
         '\n Make sure you have created the file in your project root directory with correct credentials. ' +
         '\n' +
         '\n IMPORTANT: IF there is no need to logIn:' +

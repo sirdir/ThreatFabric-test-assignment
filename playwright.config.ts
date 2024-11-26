@@ -26,26 +26,39 @@ export default defineConfig({
     extraHTTPHeaders: { 'User-Agent': 'Playwright/1.49.0 (phddir@gmail.com)' },
     screenshot: { mode: 'only-on-failure', fullPage: true },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: { mode: 'retain-on-failure', sources: true },
+    trace: { mode: 'on', sources: true },
   },
 
   /* Configure projects for Chrome only */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1920, height: 1080 } },
+      testDir: './tests/ui',
+      // UI of openlibrary is quite slow, so we need to increase the timeout for tests to pass
+      timeout: 90000,
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1920, height: 1080 },
+        trace: 'on',
+        extraHTTPHeaders: { 'User-Agent': 'Playwright/1.49.0 (phddir@gmail.com)' },
+      },
     },
     {
       name: 'api',
       dependencies: ['api-setup'],
+      testDir: './tests/api',
       use: {
-        trace: 'on-all-retries',
+        trace: 'on',
         extraHTTPHeaders: { 'User-Agent': 'Playwright/1.49.0 (phddir@gmail.com)', 'Content-Type': 'application/json' },
       },
     },
     {
       name: 'api-setup',
       testMatch: /global\.api\.setup\.ts/,
+      use: {
+        trace: 'on',
+        extraHTTPHeaders: { 'User-Agent': 'Playwright/1.49.0 (phddir@gmail.com)', 'Content-Type': 'application/json' },
+      },
     },
   ],
 });

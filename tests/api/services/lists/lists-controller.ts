@@ -7,7 +7,7 @@ export class ListsController extends BaseController {
 
   async createList(user: string, data: string | object, expectedStatus = 200) {
     const resp = await this.request.post(this.endpoints.createList(user), {
-      headers: { 'Content-Type': `application/json`, cookie: this.coockie },
+      headers: { cookie: this.coockie },
       data,
     });
 
@@ -22,7 +22,7 @@ export class ListsController extends BaseController {
 
   async updateList(user: string, listId: string, data: string | object, expectedStatus = 200) {
     const resp = await this.request.put(this.endpoints.updateList(user, listId), {
-      headers: { 'Content-Type': `application/json`, cookie: this.coockie },
+      headers: { cookie: this.coockie },
       data,
     });
 
@@ -31,7 +31,7 @@ export class ListsController extends BaseController {
 
   async deleteList(user: string, listId: string, expectedStatus = 200) {
     const resp = await this.request.post(this.endpoints.deleteList(user, listId), {
-      headers: { 'Content-Type': `application/json`, cookie: this.coockie },
+      headers: { cookie: this.coockie },
     });
 
     return validateAndParse(resp, expectedStatus);
